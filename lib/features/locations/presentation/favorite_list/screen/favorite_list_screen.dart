@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:practical_class_01/core/di.dart';
 import 'package:practical_class_01/core/style/style_extensions.dart';
 import 'package:practical_class_01/features/locations/presentation/favorite_list/controller/state/favorite_list_state.dart';
+import 'package:practical_class_01/features/locations/presentation/location_list/widget/empty_favorite_state_widget.dart';
 import 'package:practical_class_01/features/locations/presentation/location_list/widget/location_card.dart';
 
 class FavoriteListScreen extends ConsumerWidget {
@@ -28,7 +29,7 @@ class FavoriteListScreen extends ConsumerWidget {
                     itemBuilder: (context, index) => LocationCard(list[index]),
                   ),
                 ),
-                EmptyState() => Text("Empty :(")
+                EmptyState() => Expanded(child: EmptyFavoriteStateWidget()),
               }
             ],
           ),

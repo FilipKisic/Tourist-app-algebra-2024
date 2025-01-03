@@ -33,11 +33,14 @@ class LocationCard extends ConsumerWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(7),
-              child: Image.network(
-                location.imageUrl,
-                width: 110,
-                height: 85,
-                fit: BoxFit.cover,
+              child: Hero(
+                tag: 'location${location.id}',
+                child: Image.network(
+                  location.imageUrl,
+                  width: 110,
+                  height: 85,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(width: 8),
@@ -58,15 +61,21 @@ class LocationCard extends ConsumerWidget {
               ),
             ),
             GestureDetector(
-              onTap: () => ref.read(favoriteListNotifier.notifier).setAsFavorite(location),
+              onTap: () => _toggleFavoriteState(ref, location),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Icon(Icons.favorite, color: Colors.white),
+                child: Icon(location.isFavorite ? Icons.favorite : Icons.favorite_outline, color: Colors.white),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _toggleFavoriteState(final WidgetRef ref, final Location location) {
+    location.isFavorite
+        ? ref.read(favoriteListNotifier.notifier).removeAsFavorite(location)
+        : ref.read(favoriteListNotifier.notifier).setAsFavorite(location);
   }
 }
